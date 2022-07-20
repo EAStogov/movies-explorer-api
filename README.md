@@ -1,1 +1,1 @@
-# movies-explorer-api
+# Бэкэнд проекта movies-explorer-api
