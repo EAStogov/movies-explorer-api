@@ -1,0 +1,19 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EAStogov/movies-explorer-api.git"
+  },
+  "author": "Egor Stogov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EAStogov/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/EAStogov/movies-explorer-api#readme"
+}
