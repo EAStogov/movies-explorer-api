@@ -16,5 +16,18 @@
   "bugs": {
     "url": "https://github.com/EAStogov/movies-explorer-api/issues"
   },
-  "homepage": "https://github.com/EAStogov/movies-explorer-api#readme"
+  "homepage": "https://github.com/EAStogov/movies-explorer-api#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "celebrate": "^15.0.1",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.1",
+    "express-rate-limit": "^6.5.1",
+    "helmet": "^5.1.1",
+    "mongodb": "^4.8.0",
+    "mongoose": "^6.4.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
 }
