@@ -37,15 +37,15 @@ const movieSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  movieId : {
+  movieId: {
     type: String,
     required: true
   },
-  nameRU  : {
+  nameRU: {
     type: String,
     required: true
   },
-  nameEN  : {
+  nameEN: {
     type: String,
     required: true
   }
