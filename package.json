@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "npx eslint .",
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
@@ -28,6 +29,9 @@
     "mongoose": "^6.4.7"
   },
   "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.19"
   }
 }
