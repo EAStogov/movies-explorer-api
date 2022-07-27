@@ -2,9 +2,9 @@ const { celebrate, Joi } = require('celebrate');
 const { getMovies, postMovie, deleteMovie } = require('../controllers/movies');
 const router = require('express').Router();
 
-router.get('/movies', getMovies);
+router.get('', getMovies);
 
-router.post('/movies', celebrate({
+router.post('', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
@@ -21,7 +21,7 @@ router.post('/movies', celebrate({
   })
 }), postMovie);
 
-router.delete('movies/:_id', celebrate({
+router.delete('/:_id', celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().required().hex().length(24)
   })
