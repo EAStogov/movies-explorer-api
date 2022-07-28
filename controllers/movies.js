@@ -24,6 +24,7 @@ const postMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
+    movieId,
     nameRU,
     nameEN } = req.body;
   const owner = req.user._id;
@@ -37,6 +38,7 @@ const postMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
+    movieId,
     nameRU,
     nameEN,
     owner})
