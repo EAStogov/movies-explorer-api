@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const BadRequestError = require('../errors/BadRequestError');
+const Conflict = require('../errors/Conflict');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const UnknownError = require('../errors/UnknownError');
@@ -49,9 +50,7 @@ const createUser = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
-        const err = new Error('Пользователь с таким email уже зарегистрирован');
-        err.statusCode = 409;
-        return next(err);
+        return next(new Conflict('Пользователь с таким email уже зарегистрирован'));
       }
       bcrypt.hash(req.body.password, 10)
         .then(hash => User.create({
@@ -69,6 +68,7 @@ const createUser = (req, res, next) => {
           }
         })
     })
+    .catch(next);
 }
 
 const login = (req, res, next) => {
