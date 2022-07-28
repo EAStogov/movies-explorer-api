@@ -1,6 +1,7 @@
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const UnknownError = require('../errors/UnknownError');
+
 const Movie = require('../models/movie');
 
 const getMovies = (req, res, next) => {
@@ -45,7 +46,13 @@ const postMovie = (req, res, next) => {
     .then((newMovie => {
       return res.send({ data: newMovie })
     }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Введены некорректные данные'));
+      } else {
+        next(new UnknownError('Что-то пошло не так'));
+      }
+    });
 }
 
 const deleteMovie = (req, res, next) => {
