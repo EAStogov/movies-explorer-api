@@ -6,14 +6,14 @@ const Movie = require('../models/movie');
 
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
-    .then(movies => {
+    .then((movies) => {
       if (!movies) {
-        return next(new NotFoundError('Фильмы не найдены'))
+        return next(new NotFoundError('Фильмы не найдены'));
       }
-      return res.send({ data: movies })
+      return res.send({ data: movies });
     })
-    .catch(next)
-}
+    .catch(next);
+};
 
 const postMovie = (req, res, next) => {
   const {
@@ -27,7 +27,8 @@ const postMovie = (req, res, next) => {
     thumbnail,
     movieId,
     nameRU,
-    nameEN } = req.body;
+    nameEN,
+  } = req.body;
   const owner = req.user._id;
 
   Movie.create({
@@ -42,10 +43,9 @@ const postMovie = (req, res, next) => {
     movieId,
     nameRU,
     nameEN,
-    owner})
-    .then((newMovie => {
-      return res.send({ data: newMovie })
-    }))
+    owner,
+  })
+    .then((newMovie) => res.send({ data: newMovie }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Введены некорректные данные'));
@@ -53,26 +53,26 @@ const postMovie = (req, res, next) => {
         next(new UnknownError('Что-то пошло не так'));
       }
     });
-}
+};
 
 const deleteMovie = (req, res, next) => {
-  const movieId = req.params._id
+  const movieId = req.params._id;
   Movie.findById(movieId)
-    .then(movie => {
+    .then((movie) => {
       if (!movie) {
-        return next(new NotFoundError('Фильм не найден'))
+        return next(new NotFoundError('Фильм не найден'));
       }
       Movie.findOneAndRemove(movie)
-        .then(removedMovie => res.send({ data: removedMovie }))
-        .catch(err => {
+        .catch((err) => {
           if (err.name === 'CastError') {
-            next(new BadRequestError('Введены некорректные данные'))
+            next(new BadRequestError('Введены некорректные данные'));
           } else {
-            next(new UnknownError('Что-то пошло не так'))
+            next(new UnknownError('Что-то пошло не так'));
           }
-        })
+        });
+      return res.send({ data: movie });
     })
-    .catch(next)
-}
+    .catch(next);
+};
 
-module.exports = { getMovies, postMovie, deleteMovie }
+module.exports = { getMovies, postMovie, deleteMovie };

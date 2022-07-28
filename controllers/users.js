@@ -13,29 +13,29 @@ const { JWT_SECRET } = process.env;
 
 const getMe = (req, res, next) => {
   User.findById(req.user._id)
-    .then(me => {
+    .then((me) => {
       if (!me) {
-        return next(new NotFoundError('Пользователь не найден'))
+        return next(new NotFoundError('Пользователь не найден'));
       }
       return res.send({ data: me });
     })
     .catch(next);
-}
+};
 
 const updateUserProfile = (req, res, next) => {
-  const {name, email} = req.body;
+  const { name, email } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
     { name, email },
-    { new: true, runValidators: true }
+    { new: true, runValidators: true },
   )
-    .then(updatedUser => {
+    .then((updatedUser) => {
       if (!updatedUser) {
         return next(new NotFoundError('Пользователь не найден'));
       }
       return res.send({ data: updatedUser });
     })
-    .catch(err => {
+    .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Введены некорректные данные'));
       } else if (err.name === 'CastError') {
@@ -43,33 +43,33 @@ const updateUserProfile = (req, res, next) => {
       } else {
         next(new UnknownError('Что-то пошло не так'));
       }
-    })
-}
+    });
+};
 
 const createUser = (req, res, next) => {
   User.findOne({ email: req.body.email })
-    .then(user => {
+    .then((user) => {
       if (user) {
         return next(new Conflict('Пользователь с таким email уже зарегистрирован'));
       }
       bcrypt.hash(req.body.password, 10)
-        .then(hash => User.create({
+        .then((hash) => User.create({
           email: req.body.email,
           password: hash,
           name: req.body.name,
         }))
-        .then(newUser => res.send({
-          email: newUser.email,
-          name: newUser.name,
-        }))
-        .catch(err => {
+        .catch((err) => {
           if (err.name === 'ValidationError') {
             next(new BadRequestError('Введены некорректные данные'));
           }
-        })
+        });
+      return res.send({
+        email: req.body.email,
+        name: req.body.name,
+      });
     })
     .catch(next);
-}
+};
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
@@ -89,10 +89,14 @@ const login = (req, res, next) => {
       return res.send({ token });
     })
     .catch(next);
-}
+};
 
-const logout = (_req, res, _next) => {
-  return res.clearCookie('jwt').send({ message: 'JWT-Cookie успешно удален' });
-}
+const logout = (_req, res) => res.clearCookie('jwt').send({ message: 'JWT-Cookie успешно удален' });
 
-module.exports = { getMe, updateUserProfile, createUser, login, logout };
+module.exports = {
+  getMe,
+  updateUserProfile,
+  createUser,
+  login,
+  logout,
+};
