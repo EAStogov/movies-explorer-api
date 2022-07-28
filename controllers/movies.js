@@ -43,22 +43,7 @@ const postMovie = (req, res, next) => {
     nameEN,
     owner})
     .then((newMovie => {
-      const { _id } = newMovie;
-      return res.send({
-        data: {
-          director,
-          duration,
-          year,
-          description,
-          image,
-          trailerLink,
-          thumbnail,
-          nameRU,
-          nameEN,
-          owner,
-          _id
-        }
-      })
+      return res.send({ data: newMovie })
     }))
     .catch(next);
 }
