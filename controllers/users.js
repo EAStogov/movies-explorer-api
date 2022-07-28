@@ -91,4 +91,8 @@ const login = (req, res, next) => {
     .catch(next);
 }
 
-module.exports = { getMe, updateUserProfile, createUser, login };
+const logout = (_req, res, _next) => {
+  return res.clearCookie('jwt').send({ message: 'JWT-Cookie успешно удален' });
+}
+
+module.exports = { getMe, updateUserProfile, createUser, login, logout };

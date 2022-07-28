@@ -5,7 +5,7 @@ const userRouter = require('./users');
 const movieRouter = require('./movies');
 const auth = require('../midlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
-const { createUser, login } = require('../controllers/users');
+const { createUser, login, logout } = require('../controllers/users');
 
 router.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -22,7 +22,7 @@ router.post('/signin', celebrate({
   })
 }), login)
 
-// signout
+router.post('/signout', logout)
 
 router.use(auth);
 
