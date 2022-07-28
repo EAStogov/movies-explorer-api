@@ -1,4 +1,5 @@
 const BadRequestError = require('../errors/BadRequestError');
+const Forbidden = require('../errors/Forbidden');
 const NotFoundError = require('../errors/NotFoundError');
 const UnknownError = require('../errors/UnknownError');
 
@@ -61,6 +62,9 @@ const deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (!movie) {
         return next(new NotFoundError('Фильм не найден'));
+      }
+      if (JSON.stringify(req.user._id !== JSON.stringify(movie.owner))) {
+        return next(new Forbidden('Невозможно удалить фильм'));
       }
       Movie.findOneAndRemove(movie)
         .catch((err) => {
