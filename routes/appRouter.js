@@ -2,8 +2,8 @@ const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
 
 const userRouter = require('./users');
-const movieRouter = require('./movie');
-const auth = require('../middlewares/auth');
+const movieRouter = require('./movies');
+const auth = require('../midlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
 const { createUser, login } = require('../controllers/users');
 
