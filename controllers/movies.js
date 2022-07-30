@@ -66,7 +66,7 @@ const deleteMovie = (req, res, next) => {
       if (JSON.stringify(req.user._id) !== JSON.stringify(movie.owner)) {
         return next(new Forbidden('Невозможно удалить фильм'));
       }
-      Movie.findOneAndRemove(movie)
+      Movie.findByIdAndRemove(movieId)
         .catch((err) => {
           if (err.name === 'CastError') {
             next(new BadRequestError('Введены некорректные данные'));
