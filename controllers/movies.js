@@ -63,7 +63,7 @@ const deleteMovie = (req, res, next) => {
       if (!movie) {
         return next(new NotFoundError('Фильм не найден'));
       }
-      if (JSON.stringify(req.user._id !== JSON.stringify(movie.owner))) {
+      if (JSON.stringify(req.user._id) !== JSON.stringify(movie.owner)) {
         return next(new Forbidden('Невозможно удалить фильм'));
       }
       Movie.findOneAndRemove(movie)
