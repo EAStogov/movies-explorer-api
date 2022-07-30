@@ -22,9 +22,9 @@ router.post('/signin', celebrate({
   }),
 }), login);
 
-router.post('/signout', logout);
-
 router.use(auth);
+
+router.post('/signout', logout);
 
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);
