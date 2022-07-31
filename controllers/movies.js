@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const BadRequestError = require('../errors/BadRequestError');
 const Forbidden = require('../errors/Forbidden');
 const NotFoundError = require('../errors/NotFoundError');
@@ -67,6 +68,7 @@ const deleteMovie = (req, res, next) => {
         return next(new Forbidden('Невозможно удалить чужой фильм'));
       }
       Movie.findByIdAndRemove(movieId)
+        .then((removedMovie) => res.send({ data: removedMovie }))
         .catch((err) => {
           if (err.name === 'CastError') {
             next(new BadRequestError('Введены некорректные данные'));
@@ -74,7 +76,6 @@ const deleteMovie = (req, res, next) => {
             next(new UnknownError('Что-то пошло не так'));
           }
         });
-      return res.send({ data: movie });
     })
     .catch(next);
 };
