@@ -16,6 +16,8 @@ const { NODE_ENV, DB, PORT = 3000 } = process.env;
 
 const app = express();
 
+app.use(requestLogger);
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -31,8 +33,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(limiter);
 app.use(helmet());
-
-app.use(requestLogger);
 
 app.use('', appRouter);
 
