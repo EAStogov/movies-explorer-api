@@ -12,7 +12,7 @@ const cors = require('cors');
 const appRouter = require('./routes/appRouter');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
 
-const { PORT = 3000 } = process.env;
+const { NODE_ENV, DB, PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -36,7 +36,8 @@ app.use(requestLogger);
 
 app.use('', appRouter);
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+const db = NODE_ENV === 'production' ? DB : 'mongodb://localhost:27017/dev_bitfilmsdb';
+mongoose.connect(db);
 
 app.use(errorLogger);
 
