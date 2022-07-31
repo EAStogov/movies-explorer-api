@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -24,26 +25,33 @@ const getMe = (req, res, next) => {
 
 const updateUserProfile = (req, res, next) => {
   const { name, email } = req.body;
-  User.findByIdAndUpdate(
-    req.user._id,
-    { name, email },
-    { new: true, runValidators: true },
-  )
-    .then((updatedUser) => {
-      if (!updatedUser) {
-        return next(new NotFoundError('Пользователь не найден'));
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (user && user.email !== req.user.email) {
+        return next(new Conflict('Пользователь с таким email уже существует'));
       }
-      return res.send({ data: updatedUser });
+      User.findByIdAndUpdate(
+        req.user._id,
+        { name, email },
+        { new: true, runValidators: true },
+      )
+        .then((updatedUser) => {
+          if (!updatedUser) {
+            return next(new NotFoundError('Пользователь не найден'));
+          }
+          return res.send({ data: updatedUser });
+        })
+        .catch((err) => {
+          if (err.name === 'ValidationError') {
+            next(new BadRequestError('Введены некорректные данные'));
+          } else if (err.name === 'CastError') {
+            next(new BadRequestError('Некорректный id'));
+          } else {
+            next(new UnknownError('Что-то пошло не так'));
+          }
+        });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError('Введены некорректные данные'));
-      } else if (err.name === 'CastError') {
-        next(new BadRequestError('Некорректный id'));
-      } else {
-        next(new UnknownError('Что-то пошло не так'));
-      }
-    });
+    .catch(next);
 };
 
 const createUser = (req, res, next) => {
