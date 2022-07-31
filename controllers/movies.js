@@ -68,15 +68,15 @@ const deleteMovie = (req, res, next) => {
       }
       Movie.findByIdAndRemove(movieId)
         .then((removedMovie) => res.send({ data: removedMovie }))
-        .catch((err) => {
-          if (err.name === 'CastError') {
-            next(new BadRequestError('Введены некорректные данные'));
-          } else {
-            next(err);
-          }
-        });
+        .catch(next);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Введены некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports = { getMovies, postMovie, deleteMovie };

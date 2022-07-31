@@ -43,8 +43,6 @@ const updateUserProfile = (req, res, next) => {
         .catch((err) => {
           if (err.name === 'ValidationError') {
             next(new BadRequestError('Введены некорректные данные'));
-          } else if (err.name === 'CastError') {
-            next(new BadRequestError('Некорректный id'));
           } else {
             next(err);
           }
