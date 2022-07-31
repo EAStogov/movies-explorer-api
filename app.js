@@ -36,7 +36,7 @@ app.use(helmet());
 
 app.use('', appRouter);
 
-const db = NODE_ENV === 'production' ? DB : 'mongodb://localhost:27017/dev_bitfilmsdb';
+const db = NODE_ENV === 'production' ? DB : 'mongodb://localhost:27017/dev_moviesdb';
 mongoose.connect(db);
 
 app.use(errorLogger);
