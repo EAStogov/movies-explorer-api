@@ -6,7 +6,6 @@ const BadRequestError = require('../errors/BadRequestError');
 const Conflict = require('../errors/Conflict');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-const UnknownError = require('../errors/UnknownError');
 
 const User = require('../models/user');
 
@@ -47,7 +46,7 @@ const updateUserProfile = (req, res, next) => {
           } else if (err.name === 'CastError') {
             next(new BadRequestError('Некорректный id'));
           } else {
-            next(new UnknownError('Что-то пошло не так'));
+            next(err);
           }
         });
     })

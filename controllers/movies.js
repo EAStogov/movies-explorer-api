@@ -2,7 +2,6 @@
 const BadRequestError = require('../errors/BadRequestError');
 const Forbidden = require('../errors/Forbidden');
 const NotFoundError = require('../errors/NotFoundError');
-const UnknownError = require('../errors/UnknownError');
 
 const Movie = require('../models/movie');
 
@@ -52,7 +51,7 @@ const postMovie = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Введены некорректные данные'));
       } else {
-        next(new UnknownError('Что-то пошло не так'));
+        next(err);
       }
     });
 };
@@ -73,7 +72,7 @@ const deleteMovie = (req, res, next) => {
           if (err.name === 'CastError') {
             next(new BadRequestError('Введены некорректные данные'));
           } else {
-            next(new UnknownError('Что-то пошло не так'));
+            next(err);
           }
         });
     })
