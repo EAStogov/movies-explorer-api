@@ -51,5 +51,4 @@ app.use((err, _req, res, next) => {
   next();
 });
 
-app.listen(PORT, () => {
-});
+app.listen(PORT);
