@@ -9,7 +9,8 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const User = require('../models/user');
 
-const { JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
+const secret = NODE_ENV === 'production' ? JWT_SECRET : 'secret_key';
 
 const getMe = (req, res, next) => {
   User.findById(req.user._id)
@@ -84,7 +85,7 @@ const login = (req, res, next) => {
         throw new UnauthorizedError('Неправильные почта или пароль');
       }
 
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, secret, { expiresIn: '7d' });
 
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24,
