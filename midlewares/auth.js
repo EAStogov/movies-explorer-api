@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
-const secret = NODE_ENV === 'production' ? JWT_SECRET : 'secret_key';
+const { NODE_ENV, JWT_SECRET, JWT_SECRET_DEV } = process.env;
+const secret = NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV;
 
 module.exports = (req, res, next) => {
   const { cookies } = req;

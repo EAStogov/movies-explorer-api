@@ -9,8 +9,8 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const User = require('../models/user');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
-const secret = NODE_ENV === 'production' ? JWT_SECRET : 'secret_key';
+const { NODE_ENV, JWT_SECRET, JWT_SECRET_DEV } = process.env;
+const secret = NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV;
 
 const getMe = (req, res, next) => {
   User.findById(req.user._id)
