@@ -12,7 +12,12 @@ const cors = require('cors');
 const appRouter = require('./routes/appRouter');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
 
-const { NODE_ENV, DB, PORT = 3000 } = process.env;
+const {
+  NODE_ENV,
+  DB,
+  DB_DEV,
+  PORT = 3000,
+} = process.env;
 
 const app = express();
 
@@ -36,7 +41,7 @@ app.use(helmet());
 
 app.use('', appRouter);
 
-const db = NODE_ENV === 'production' ? DB : 'mongodb://localhost:27017/dev_moviesdb';
+const db = NODE_ENV === 'production' ? DB : DB_DEV;
 mongoose.connect(db);
 
 app.use(errorLogger);
