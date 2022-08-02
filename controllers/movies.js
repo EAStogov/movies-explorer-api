@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 const BadRequestError = require('../errors/BadRequestError');
+const Conflict = require('../errors/Conflict');
 const Forbidden = require('../errors/Forbidden');
 const NotFoundError = require('../errors/NotFoundError');
 
@@ -31,29 +32,35 @@ const postMovie = (req, res, next) => {
     nameEN,
   } = req.body;
   const owner = req.user._id;
-
-  Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    thumbnail,
-    movieId,
-    nameRU,
-    nameEN,
-    owner,
-  })
-    .then((newMovie) => res.send({ data: newMovie }))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError('Введены некорректные данные'));
-      } else {
-        next(err);
+  Movie.findOne({ movieId: req.body.movieId })
+    .then((movie) => {
+      if (movie) {
+        return next(new Conflict('Фильм уже добавлен в библиотеку'));
       }
-    });
+      Movie.create({
+        country,
+        director,
+        duration,
+        year,
+        description,
+        image,
+        trailerLink,
+        thumbnail,
+        movieId,
+        nameRU,
+        nameEN,
+        owner,
+      })
+        .then((newMovie) => res.send({ data: newMovie }))
+        .catch((err) => {
+          if (err.name === 'ValidationError') {
+            next(new BadRequestError('Введены некорректные данные'));
+          } else {
+            next(err);
+          }
+        });
+    })
+    .catch(next);
 };
 
 const deleteMovie = (req, res, next) => {
