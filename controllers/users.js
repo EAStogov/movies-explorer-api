@@ -9,7 +9,9 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const User = require('../models/user');
 
-const { NODE_ENV, JWT_SECRET, JWT_SECRET_DEV } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET_DEV } = require('../constants/config');
+
 const secret = NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV;
 
 const getMe = (req, res, next) => {

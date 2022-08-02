@@ -11,11 +11,11 @@ const cors = require('cors');
 
 const appRouter = require('./routes/appRouter');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
+const { DB_DEV } = require('./constants/config');
 
 const {
   NODE_ENV,
   DB,
-  DB_DEV,
   PORT = 3000,
 } = process.env;
 
