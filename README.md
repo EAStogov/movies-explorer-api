@@ -1,7 +1,17 @@
-# Бэкэнд проекта movies-explorer-api
+# react-mesto-api-full
+Репозиторий для приложения дипломного проекта `Movies`, включающий бэкенд часть приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками фильмов и пользователями.
 
-http://api.esto.movie.nomoredomains.xyz
+## Технологии, которые я использовал:
+* Node.js;
+* Express.js;
+* MongoDB;
 
-https://api.esto.movie.nomoredomains.xyz
+## Ссылки на бэк:
+* http://api.esto.movie.nomoredomains.xyz
+* https://api.esto.movie.nomoredomains.xyz
 
-51.250.24.17
+
+## Запуск проекта
+
+`npm run start` — запускает сервер   
+`npm run dev` — запускает сервер с hot-reload
