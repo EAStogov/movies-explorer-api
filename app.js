@@ -32,6 +32,7 @@ const limiter = rateLimit({
 app.use(cors({
   origin: urls,
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 }));
 
 app.use(bodyParser.json());
