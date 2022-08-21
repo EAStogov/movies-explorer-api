@@ -12,6 +12,7 @@ const cors = require('cors');
 const appRouter = require('./routes/appRouter');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
 const { DB_DEV } = require('./constants/config');
+const urls = require('./constants/url');
 
 const {
   NODE_ENV,
@@ -29,6 +30,7 @@ const limiter = rateLimit({
 });
 
 app.use(cors({
+  origin: urls,
   credentials: true,
 }));
 
