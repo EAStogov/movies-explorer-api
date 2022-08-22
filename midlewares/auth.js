@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
   const { cookies } = req;
 
   if (!cookies.jwt) {
-    throw new UnauthorizedError(JSON.stringify(req));
+    throw new UnauthorizedError(JSON.stringify(req.cookies));
   }
 
   const token = cookies.jwt;
