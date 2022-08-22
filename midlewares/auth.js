@@ -9,7 +9,7 @@ const secret = NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV;
 module.exports = (req, res, next) => {
   const { cookies } = req;
 
-  if (!cookies) {
+  if (!cookies.jwt) {
     throw new UnauthorizedError('Необходима авторизация');
   }
 
