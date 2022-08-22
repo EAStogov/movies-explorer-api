@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
   const { cookies } = req;
 
   if (!cookies) {
-    throw new UnauthorizedError(`cookies: ${cookies}`);
+    throw new UnauthorizedError(`'Необходима авторизация'`);
   }
 
   const token = cookies.jwt;
@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, secret);
   } catch (err) {
-    throw new UnauthorizedError('Необходима авторизация');
+    throw new UnauthorizedError(`cookies: ${cookies}`);
   }
 
   req.user = payload;
