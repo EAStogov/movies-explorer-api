@@ -97,12 +97,15 @@ const login = (req, res, next) => {
         sameSite: 'None',
         secure: true,
       }).send({ message: 'success' });
-      // return res.send({ token });
     })
     .catch(next);
 };
 
-const logout = (_req, res) => res.clearCookie('jwt').send({ message: 'JWT-Cookie успешно удален' });
+const logout = (_req, res) => res.clearCookie('jwt', {
+  httpOnly: true,
+  sameSite: 'None',
+  secure: true,
+}).send({ message: 'JWT-Cookie успешно удален' });
 
 module.exports = {
   getMe,
