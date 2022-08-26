@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 const { getMe, updateUserProfile } = require('../controllers/users');
 
-router.post('/me', getMe);
+router.get('/me', getMe);
 
 router.patch('/me', celebrate({
   body: Joi.object().keys({
