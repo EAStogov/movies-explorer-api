@@ -31,8 +31,8 @@ const postMovie = (req, res, next) => {
     nameRU,
     nameEN,
   } = req.body;
-  const newOwner = req.user._id;
-  Movie.findOne({ movieId: req.body.movieId, owner: newOwner })
+  const owner = req.user._id;
+  Movie.findOne({ movieId: req.body.movieId, owner: req.user._id })
     .then((movie) => {
       if (movie) {
         return next(new Conflict('Фильм уже добавлен в библиотеку'));
@@ -49,7 +49,7 @@ const postMovie = (req, res, next) => {
         movieId,
         nameRU,
         nameEN,
-        newOwner,
+        owner,
       })
         .then((newMovie) => res.send({ data: newMovie }))
         .catch((err) => {
