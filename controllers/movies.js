@@ -49,6 +49,7 @@ const postMovie = (req, res, next) => {
         movieId,
         nameRU,
         nameEN,
+        newOwner,
       })
         .then((newMovie) => res.send({ data: newMovie }))
         .catch((err) => {
