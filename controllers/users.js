@@ -30,6 +30,7 @@ const updateUserProfile = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (user && user._id !== req.user._id) {
+        res.send({ bdUser: user, reqUser: req.user });
         return next(new Conflict('Пользователь с таким email уже существует'));
       }
       User.findByIdAndUpdate(
