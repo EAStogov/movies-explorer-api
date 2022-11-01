@@ -46,10 +46,10 @@ const postMovie = (req, res, next) => {
         image,
         trailerLink,
         thumbnail,
+        newOwner,
         movieId,
         nameRU,
         nameEN,
-        newOwner,
       })
         .then((newMovie) => res.send({ data: newMovie }))
         .catch((err) => {
