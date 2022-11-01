@@ -46,7 +46,6 @@ const postMovie = (req, res, next) => {
         image,
         trailerLink,
         thumbnail,
-        newOwner,
         movieId,
         nameRU,
         nameEN,
